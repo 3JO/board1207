@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="org.sean.persistence.MemberMapper">
+ 
+ 	<select id="getTime" resultType="string">
+ 	select sysdate from dual
+ 	</select>
+ 	<sql id="cri">
+	 <if test="searchType != null">
+		<if test="searchType eq 't'.toString()">
+			and title like ('%'|| #{keyword} ||'%')
+		</if>
+	</if>
+ 	</sql>
+ 	<select id="search" resultType="org.sean.domain.BoardVO">
+ 	<![CDATA[
+	select
+	*
+	from
+	(
+	select /*+Index_DESC(tbl_board pk_board)*/
+	rownum rn, bno, title, content, writer, regdate
+	from tbl_board
+	where bno > 0
+	]]>
+	  <!-- <if test="searchType == 'c'">
+         and content like ('%', #{keyword} ,'%')
+          </if>
+      <if test="searchType == 'w'"> 
+      and writer like '%', #{keyword} '%'</if>
+      <if test="searchType == 'tc'">
+      and title like ('%' #{keyword} '%') or content like ('%' #{keyword} '%') </if>
+      <if test="searchType == 'tw'"> 
+      and title like '% #{keyword} '%' or writer like '% #{keyword} %' </if>
+      <if test="searchType == 'tcw'"> 
+      and title like '% #{keyword} %' or content like '% #{keyword} %' or writer like '% #{keyword} %' </if> -->
+	<include refid="cri"></include>
+	<![CDATA[
+	and rownum <= #{pageNo} * #{perPage}
+	)
+	where rn > (#{pageNo} - 1) * #{perPage}
+	]]>
+ 	</select>
+ 	<select id="searchCount" resultType="int">
+ 	<![CDATA[
+ 	select count(*) from tbl_board where bno > 0
+ 	]]>
+ 	<include refid="cri"></include>
+ 	</select>
+ <!-- <insert id="create">
+ insert into tbl_member (usr,upw,uname,email,phone,birth,gender)
+ values(#{usr},#{upw},#{uname},#{email},#{phone},#{birth},#{gender})
+ </insert>
+ <select id="read" resultType="String">
+ select * from tbl_member where usr = #{usr}
+ </select>
+ <delete id="delete">
+ delete from tbl_member where usr = #{usr}
+ </delete>
+ <update id="update">
+ update tbl_member set upw = #{upw}, uname = #{uname}, email = #{email}, phone = #{phone}, birth = #{birth}, gender = #{gender} where usr = #{usr} 
+ </update>
+ <select id="list" resultType="org.sean.domain.MemberVo">
+ select * from tbl_member
+ </select>
+ <select id="listPage" resultType="org.sean.domain.MemberVo">
+ select * from <![CDATA[ ( select /*+INDEX_DESC(user32.tbl_member pk_board)*/ rownum rn, mno, usr, upw, uname, email, phone, birth, gender, regdate, updateddate from user32.tbl_member where rownum <= #{page} * 10 and mno >0 ) where rn> (#{page} - 1)*10]]>  
+ </select> -->
+</mapper>
