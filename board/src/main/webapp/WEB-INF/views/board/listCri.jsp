@@ -43,27 +43,32 @@
 						</c:forEach>
 
 					</table>
-				<div class="text-center"></div>
-					<ul class="pagination" id="pageUL">
-					
-					  <c:if test="${pageMaker.prev }">
-					    <li><a href="listPage?page=${pageMaker.startPage - 1}">&laquo;</a></li>
-					  </c:if>
-					  
-					  <c:forEach begin="${pageMaker.startPage }"
-					    end = "${pageMaker.endPage }" var="idx">
-					    <li
-					      <c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
-					      <a href="listPage?page=${idx }">${idx }</a>
-					    </li>
-					  </c:forEach>
-					  
-					  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-					    <li><a href="listPage?page=${pageMaker.endPage +1}">&raquo;</a></li>
-					  </c:if>
-					</ul>
-
 				</div>
+
+				<div class="box-footer">
+
+					<div class="text-center">
+						<ul class="pagination">
+
+							<c:if test="${pageMaker.prev}">
+								<li><a href="listPage?page=${pageMaker.startPage - 1}">&laquo;</a></li>
+							</c:if>
+
+							<c:forEach begin="${pageMaker.startPage }"
+								end="${pageMaker.endPage }" var="idx">
+								<li
+									<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
+									<a href="listPage?page=${idx}">${idx}</a>
+
+								</li>
+							</c:forEach>
+
+							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+								<li><a href="listPage?page=${pageMaker.endPage +1}">&raquo;</a></li>
+							</c:if>
+
+						</ul>
+					</div>
 					<select id="searchType">
 						<option value="n">---</option>
 						<option value="t">제목</option>
@@ -71,27 +76,14 @@
 						<option value="w">작성자</option>
 						<option value="tc">제목+내용</option>
 						<option value="tw">제목+작성자</option>
-					</select> <input id="keyword" type="text" name="keyword">
-				
-				<!-- /.box-body -->
-				<div class="box-footer">
-					<a href="/board/register?bno=1">
+					</select> <input id="keyword" type="text" name="keyword"> <a
+						href="/board/register?bno=1">
 						<button type="submit" class="btn btn-primary">Regist</button>
 					</a>
 				</div>
-				<script>
-					$(document).ready(function() {
 
-						var formObj = $("form[role='form']");
-						console.log(formObj);
-						$(".btn-primary").on("click", function() {
-							formObj.submit();
-						});
-
-					});
-				</script>
 				<!-- /.box-footer-->
-
+				<div class="box-footer"></div>
 			</div>
 		</div>
 		<!--/.col (left) -->
@@ -100,7 +92,7 @@
 	<!-- /.row -->
 </section>
 <!-- /.content -->
-</div>
+
 <!-- /.content-wrapper -->
 
 <script>
@@ -109,6 +101,17 @@
 	if (result == 'SUCCESS') {
 		alert("처리가 완료되었습니다.");
 	}
+</script>
+<script>
+	$(document).ready(function() {
+
+		var formObj = $("form[role='form']");
+		console.log(formObj);
+		$(".btn-primary").on("click", function() {
+			formObj.submit();
+		});
+
+	});
 </script>
 
 <%@include file="../include/footer.jsp"%>

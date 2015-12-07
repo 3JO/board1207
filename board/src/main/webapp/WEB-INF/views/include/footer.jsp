@@ -175,30 +175,5 @@
 <script src="/resources/dist/js/app.min.js" type="text/javascript"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/resources/dist/js/demo.js" type="text/javascript"></script>
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="/resources/bootstrap/js/pageMaker.js"></script>
-<script>
-    $(document).ready(function(){
-        var cri = {pageNo:12, totalCount:151, perPage:10, searchType:'w', keyword:"홍길동"};
-
-        $("#pageUL").html(makePage(cri));
-
-        $("#pageUL").on("click","li a", function(event){
-            event.preventDefault();
-            var targetPage = $(this).attr("href");
-            console.log(targetPage);
-        });
-
-        var options = $("#searchType option");
-        console.log("options size : "+options.size());
-
-        console.log($("#searchType option[value="+cri.searchType+"]")); 
-
-        $("#searchType option[value="+cri.searchType+"]").attr("selected","true");
-
-        $("#keyword").val(cri.keyword);
-    });
-</script>
 </body>
 </html>

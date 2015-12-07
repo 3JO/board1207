@@ -64,6 +64,17 @@
 	]]>
 	</select>
 	
+	<select id="countPaging" resultType="int">
+ <![CDATA[
+ select 
+   count(bno) 
+ from 
+   tbl_board 
+ where 
+   bno > 0 
+ ]]>
+	</select>
+	
 	<sql id="cri">
 		<if test="searchType eq 't'.toString()">
 			and title like CONCAT('%'||#{keyword}||'%')

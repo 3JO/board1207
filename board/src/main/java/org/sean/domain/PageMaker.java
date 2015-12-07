@@ -43,10 +43,6 @@ public class PageMaker {
 		return totalcount;
 	}
 
-	public void setTotalcount(int totalcount) {
-		this.totalcount = totalcount;
-	}
-
 	public int getStartPage() {
 		return startPage;
 	}
