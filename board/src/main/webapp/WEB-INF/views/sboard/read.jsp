@@ -70,8 +70,9 @@
 						});
 
 						$(".btn-primary").on("click", function() {
-							
-							self.location = "/sboard/list";
+							formObj.attr("method","get")
+							formObj.attr("action", "/sboard/list");
+							formObj.submit();
 						});
 
 					});

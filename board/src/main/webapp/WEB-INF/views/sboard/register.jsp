@@ -34,8 +34,24 @@
 					<!-- /.box-body -->
 
 					<div class="box-footer">
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="submit" class="btn btn-primary">완료</button>
+						<button type="submit" class="btn btn-warning">뒤로</button>
 					</div>
+					<script>
+					$(document).ready(function() {
+
+						var formObj = $("form[role='form']");
+
+						console.log(formObj);
+
+						$(".btn-warning").on("click", function() {
+							formObj.attr("method","get")
+							formObj.attr("action", "/sboard/list");
+							formObj.submit();
+						});
+
+					});
+				</script>
 				</form>
 
 
