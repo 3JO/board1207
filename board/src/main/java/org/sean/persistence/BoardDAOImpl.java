@@ -54,7 +54,7 @@ public class BoardDAOImpl implements BoardDAO {
 			page = 1;
 		}
 		page = (page - 1) * 10;
-		
+		System.out.println(page);
 		return session.selectList(namespace+".listPage", page);
 	}
 

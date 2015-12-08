@@ -12,7 +12,7 @@ public class PageMaker {
 	
 	private Criteria cri;
 	
-	public void serCri(Criteria cri){
+	public void setCri(Criteria cri){
 		this.cri = cri;
 	}
 	
@@ -85,10 +85,6 @@ public class PageMaker {
 
 	public Criteria getCri() {
 		return cri;
-	}
-
-	public void setCri(Criteria cri) {
-		this.cri = cri;
 	}
 
 	@Override
