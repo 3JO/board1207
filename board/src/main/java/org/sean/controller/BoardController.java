@@ -74,7 +74,7 @@ public class BoardController {
 
 		rttr.addFlashAttribute("msg", "SUCCESS");
 
-		return "redirect:/board/listAll";
+		return "redirect:/board/listCri";
 	}
 
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
@@ -91,20 +91,20 @@ public class BoardController {
 		service.modify(board);
 		rttr.addFlashAttribute("msg", "SUCCESS");
 
-		return "redirect:/board/listAll";
+		return "redirect:/board/listCri";
 	}
 
 	@RequestMapping(value = "/listPage", method = RequestMethod.GET)
 	public void listPage(@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
 
-		logger.info(cri.toString());
+//		logger.info(cri.toString());
 
 		model.addAttribute("list", service.listCriteria(cri));
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listCountCriteria(cri));
 
-		System.out.println(pageMaker.toString());
+//		System.out.println(pageMaker.toString());
 
 		model.addAttribute("pageMaker", pageMaker);
 	}

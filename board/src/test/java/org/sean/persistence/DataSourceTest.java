@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -100,9 +101,29 @@ public class DataSourceTest {
 				.queryParam("perPageNum", 20)
 				.build();
 		
-		logger.info("/board/read?bno=12&perPageNum=20");
+		logger.info("/board/read?bno=12&perPage=20");
 		logger.info(uri.toString());
 		
 	}
 	
+	@Test
+	public void testSearch() throws Exception{
+		
+		Criteria cri = new Criteria();
+		cri.setPage(1);
+		cri.setKeyword("user00");
+		cri.setSearchType("w");
+		
+		logger.info("================");
+		
+		List<BoardVO> list = dao.listSearch(cri);
+		
+		for (BoardVO boardVO : list) {
+			logger.info(boardVO.getBno() + ":" + boardVO.getWriter());
+		}
+		
+		logger.info("================");
+		
+		logger.info("COUNT :" + dao.listSearchCount(cri));
+	}
 }

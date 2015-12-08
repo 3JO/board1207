@@ -19,7 +19,7 @@
 
 		<script>
 			alert("SUCCESS");
-			self.location = "/board/list"
+			self.location = "/board/listCri"
 		</script>
 
 

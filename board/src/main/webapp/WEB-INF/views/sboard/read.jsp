@@ -15,10 +15,14 @@
 				</div>
 				<!-- /.box-header -->
 
-				<form role="form" method="post">
+				<form role="form" action="modifyPage" method="post">
 
 					<input type='hidden' name='bno' value="${boardVO.bno}">
-
+					<input type='hidden' name='page' value="${cri.page}">
+					<input type='hidden' name='perPage' value="${cri.perPage}">
+					<input type='hidden' name='searchType' value="${cri.searchType}">
+					<input type='hidden' name='keyword' value="${cri.keyword}">
+					
 				</form>
 
 				<div class="box-body">
@@ -55,18 +59,19 @@
 						console.log(formObj);
 
 						$(".btn-warning").on("click", function() {
-							formObj.attr("action", "/board/modify");
+							formObj.attr("action", "/sboard/modify");
 							formObj.attr("method", "get");
 							formObj.submit();
 						});
 
 						$(".btn-danger").on("click", function() {
-							formObj.attr("action", "/board/remove");
+							formObj.attr("action", "/sboard/remove");
 							formObj.submit();
 						});
 
 						$(".btn-primary").on("click", function() {
-							self.location = "/board/listCri";
+							
+							self.location = "/sboard/list";
 						});
 
 					});

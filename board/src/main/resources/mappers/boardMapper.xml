@@ -5,6 +5,39 @@
 
 <mapper namespace="org.sean.persistence.BoardMapper">
 
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and title like ('%' || #{keyword} || '%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				and content like ('%' || #{keyword} || '%')
+			</if>
+			<if test="searchType == 'w'.toString()">
+				and writer like ('%' || #{keyword} || '%')
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				and ( title like ('%' || #{keyword} || '%') OR content
+				like
+				('%' || #{keyword} || '%'))
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				and ( content like ('%' || #{keyword} || '%') OR writer
+				like
+				('%' || #{keyword} || '%'))
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				and ( title like ('%' || #{keyword} || '%')
+				OR
+				content
+				like ('%' || #{keyword} || '%')
+				OR
+				writer like ('%' ||
+				#{keyword} || '%'))
+			</if>
+		</if>
+	</sql>
+
 	<insert id="create">
 		insert into tbl_board (bno, title, content, writer)
 		values (seq_board.nextval,#{title},#{content},#{writer})
@@ -29,7 +62,7 @@
 	 select * from tbl_board where bno > 0 order by bno desc, regdate desc
 	 ]]>
 	</select>
-	
+
 	<select id="listPage" resultType="org.sean.domain.BoardVO">
 	<![CDATA[
 	 select 
@@ -42,7 +75,7 @@
 	   and bno >0
 	]]>
 	</select>
-	
+
 	<select id="listCriteria" resultType="org.sean.domain.BoardVO">
 	<![CDATA[
 	select
@@ -63,25 +96,60 @@
 	where rn> (#{page} - 1)*10
 	]]>
 	</select>
-	
+
 	<select id="countPaging" resultType="int">
- <![CDATA[
- select 
-   count(bno) 
- from 
-   tbl_board 
- where 
-   bno > 0 
- ]]>
+	 <![CDATA[
+	 select 
+	   count(bno) 
+	 from 
+	   tbl_board 
+	 where 
+	   bno > 0 
+	 ]]>
 	</select>
-	
-	<sql id="cri">
+
+	<!-- <sql id="cri">
 		<if test="searchType eq 't'.toString()">
 			and title like CONCAT('%'||#{keyword}||'%')
 		</if>
-	</sql>
+		<if test="searchType eq 'c'.toString()">
+			and content like CONCAT('%'||#{keyword}||'%')
+		</if>
+		<if test="searchType eq 'w'.toString()">
+			and writer like CONCAT('%'||#{keyword}||'%')
+		</if>
+		<if test="searchType eq 'tc'.toString()">
+			and (writer like CONCAT('%'||#{keyword}||'%') or content like CONCAT('%'||#{keyword}||'%'))
+		</if>
+		<if test="searchType eq 'tw'.toString()">
+			and (writer like CONCAT('%'||#{keyword}||'%') or content like CONCAT('%'||#{keyword}||'%'))
+		</if>
+	</sql> -->
 
 	<select id="search" resultType="org.sean.domain.BoardVO"> 
+	<![CDATA[
+	select * from
+	(
+	select /*+index_desc(tbl_board pk_board)*/ 
+	rownum rn, bno, title, writer, content, regdate, viewcnt from tbl_board
+	where bno >  0
+	]]>
+		<include refid="search"></include>
+	<![CDATA[
+	and rownum <= #{page} * #{perPage}
+	)
+	where rn>(#{page}-1)*#{perPage}
+	]]>
+	</select>
+
+	<!-- <select id="searchCount" resultType="int">
+	<![CDATA[
+	select count(*) from tbl_board where bno > 0
+	]]>;
+		<include refid="cri"></include>
+	</select> -->
+		
+	<!-- <select id="listSearch" resultType="org.sean.domain.BoardVO">
 	<![CDATA[
 	select * from
 	(
@@ -89,18 +157,23 @@
 	rownum rn, bno, title, writer, regdate, viecnt from tbl_board
 	where bno >  0
 	]]>
-	<include refid="cri"></include>
+	<include refid="search"></include>
 	<![CDATA[
 	and rownum <= #{page} * #{perPage}
 	)
 	where rn>(#{page}-1)*#{perPage}
 	]]>;
-	</select>
+	</select> -->
+	
 
-	<select id="searchCount" resultType="int">
-	<![CDATA[
-	select count(*) from tbl_board where bno > 0
-	]]>;
-	<include refid="cri"></include>
+	<select id="listSearchCount" resultType="int">
+	<![CDATA[  
+	  select 
+	  count
+	  (*) 
+	  from tbl_board 
+	  where bno > 0 
+	]]>
+	<include refid="search"></include>
 	</select>
 </mapper>

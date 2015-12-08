@@ -8,8 +8,6 @@ public class Criteria {
 	private String SearchType;
 	private int perPage;
 	
-	
-	
 	public Criteria() {
 		this.page=1;
 		this.perPage = 10;

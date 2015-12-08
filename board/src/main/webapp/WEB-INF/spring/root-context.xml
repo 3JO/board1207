@@ -29,5 +29,6 @@
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="org.sean.persistence"></context:component-scan>		
 	<context:component-scan base-package="org.sean.controller"></context:component-scan>		
-	<context:component-scan base-package="org.sean.service"></context:component-scan>		
+	<context:component-scan base-package="org.sean.service"></context:component-scan>	
+	
 </beans>

@@ -57,4 +57,16 @@ public class BoardServiceImpl implements BoardService {
 		return dao.countPaging(cri);
 	}
 
+	@Override
+	public List<BoardVO> listSearchCriteria(Criteria cri) throws Exception {
+		
+		return dao.listSearch(cri);
+	}
+
+	@Override
+	public int listSearchCount(Criteria cri) throws Exception {
+
+		return dao.listSearchCount(cri);
+	}
+
 }

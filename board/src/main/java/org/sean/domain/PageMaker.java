@@ -1,5 +1,8 @@
 package org.sean.domain;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
 
 	private int totalcount;
@@ -86,6 +89,24 @@ public class PageMaker {
 	public Criteria getCri() {
 		return cri;
 	}
+	
+	public String makeQuery(int page) {
+
+		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
+				.queryParam("perPageNum", cri.getPerPage()).build();
+
+		return uriComponents.toUriString();
+	}
+
+	public String makeSearch(int page) {
+
+		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
+				.queryParam("perPageNum", cri.getPerPage())
+				.queryParam("searchType", ((Criteria) cri).getSearchType())
+				.queryParam("keyword", ((Criteria) cri).getKeyword()).build();
+
+		return uriComponents.toUriString();
+	}	
 
 	@Override
 	public String toString() {
